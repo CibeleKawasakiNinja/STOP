@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STOP Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #stop-game {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #results {
+      margin-top: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <div id="stop-game">
+    <h1>STOP Game</h1>
+    <form onsubmit="return startGame()">
+      <label for="letter">Enter a letter:</label>
+      <input type="text" id="letter" maxlength="1" required>
+
+      <table>
+        <tr>
+          <th>Category</th>
+          <th>Answer</th>
+        </tr>
+        <tr>
+          <td>Fruit</td>
+          <td><input type="text" class="category-answer" required></td>
+        </tr>
+        <tr>
+          <td>Animal</td>
+          <td><input type="text" class="category-answer" required></td>
+        </tr>
+        <tr>
+          <td>Country</td>
+          <td><input type="text" class="category-answer" required></td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td><input type="text" class="category-answer" required></td>
+        </tr>
+      </table>
+
+      <button type="submit">Start Game</button>
+    </form>
+
+    <div id="results"></div>
+  </div>
+
+  <script>
+    function startGame() {
+      const letter = document.getElementById('letter').value.toUpperCase();
+      const categoryAnswers = document.querySelectorAll('.category-answer');
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '';
+
+      for (let answerInput of categoryAnswers) {
+        const category = answerInput.parentNode.previousElementSibling.textContent;
+        const answer = answerInput.value.trim() || 'No answer provided';
+        const resultItem = document.createElement('p');
+        resultItem.textContent = `${category}: ${answer}`;
+        resultsDiv.appendChild(resultItem);
+        answerInput.value = ''; // Reset the input for the next round
+      }
+
+      return false; // Prevent form submission and page reload
+    }
+  </script>
+</body>
+</html>
